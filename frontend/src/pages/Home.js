@@ -7,7 +7,7 @@ import BookList from '../components/BookList';
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+// This is to fetch books 
   useEffect(() => {
     fetch('/api/books')
       .then((res) => res.json())

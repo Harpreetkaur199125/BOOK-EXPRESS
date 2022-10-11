@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import BookList from '../components/BookList';
 
 const MyBookList = () => {
+  // This data is coming from auth0 
   const { user, isLoading, isAuthenticated } = useAuth0();
   const [bookList, setBookList] = useState([]);
   const [isBooksLoading, setIsBooksLoading] = useState(true);
 
   useEffect(() => {
     setIsBooksLoading(true);
+    // In this if user exist then load books 
     if (user) {
       fetch(`/api/users/subscribed/${user.sub}`)
         .then((res) => res.json())

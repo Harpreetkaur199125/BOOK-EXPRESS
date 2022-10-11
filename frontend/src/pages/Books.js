@@ -5,10 +5,11 @@ import { useSearchQuery } from '../context.js/SearchContext';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  const [isLoading, setIsLoading] = useState(true); 
   const { state } = useSearchQuery();
   const { query } = state;
-
+// if query search exist search book otherwise fetch all books 
   useEffect(() => {
     if (query) {
       fetch(`/api/books?search=${query}`)

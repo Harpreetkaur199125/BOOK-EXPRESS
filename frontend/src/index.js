@@ -17,6 +17,7 @@ import { SearchContextProvider } from './context.js/SearchContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    {/* This data coming from auth0 which i have created on the website auth0 */}
     <Auth0Provider
       domain='dev-8ari74v8.us.auth0.com'
       clientId='s2kMTZJTPIxriKSBVhEgNSeJFd9chrrz'
@@ -24,9 +25,11 @@ root.render(
       audience='https://dev-8ari74v8.us.auth0.com/api/v2/'
       scope='read:current_user update:current_user_metadata'
     >
+{/* This is to acess query string throught the app */}
       <SearchContextProvider>
         <BrowserRouter>
           <Routes>
+            {/*This is for All routes  */}
             <Route path='/' element={<App />}>
               <Route index element={<Home />} />
               <Route path='books' element={<Books />} />

@@ -60,7 +60,7 @@ const Book = () => {
       });
   }, [id]);
 
-  // load book author
+  // This will load book author
   useEffect(() => {
     if (book) {
       fetch(`/api/users/${book.author}`)
@@ -73,7 +73,7 @@ const Book = () => {
     }
   }, [book]);
 
-  // loader while fetching book data
+  // when the loader while fetching book data
   if (isLoading) {
     return (
       <Loading>

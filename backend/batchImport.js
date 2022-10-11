@@ -11,7 +11,7 @@ const options = {
 console.log(MONGO_URI);
 
 const { users, books } = require('./data');
-
+// This is the function to store all the data
 const batchImport = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
