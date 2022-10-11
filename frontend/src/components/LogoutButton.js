@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const LogoutButton = () => {
   const { logout } = useAuth0();
 
+  // on clicking logout button, redirect to origin/root url
   return (
     <Button onClick={() => logout({ returnTo: window.location.origin })}>
       Log Out

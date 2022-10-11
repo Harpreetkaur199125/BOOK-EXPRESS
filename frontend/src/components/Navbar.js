@@ -26,12 +26,14 @@ const Navbar = () => {
           <li>
             <Link to='my-booklist'>My Reading List</Link>
           </li>
+          {/* show loading gif until user is loaded */}
           {isLoading ? (
             <Loading
               alt=''
               src='https://miro.medium.com/max/1400/1*CsJ05WEGfunYMLGfsT2sXA.gif'
             />
-          ) : isAuthenticated ? (
+          ) : // if user is authenticated show logout button otherwise login button
+          isAuthenticated ? (
             <>
               <li>
                 <Link to='profile'>Profile</Link>

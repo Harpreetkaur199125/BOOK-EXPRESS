@@ -4,6 +4,11 @@ const INITIAL_STATE = {
   query: '',
 };
 
+// Search context is used
+// for the search query param
+// to bo accessible
+// throughout our app
+
 const SearchContext = createContext();
 
 const reducers = (state, action) => {

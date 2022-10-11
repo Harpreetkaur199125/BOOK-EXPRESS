@@ -21,7 +21,7 @@ export default BookList;
 
 const List = styled.ul`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 1em;
   margin-bottom: 2em;
 `;

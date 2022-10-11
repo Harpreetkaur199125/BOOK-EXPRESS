@@ -1,9 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const AddBook = () => {
+  // user data from auth0
   const { user, isLoading, isAuthenticated } = useAuth0();
+  // initial form values
   const [values, setValues] = useState({
     title: '',
     cover_image: '',
@@ -14,14 +17,18 @@ const AddBook = () => {
     wishListedBy: [],
     subscribedBy: [],
   });
+  // to check if user is submitting the form
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
+  // handle input changes
   const handleChange = (e) =>
     setValues({ ...values, [e.target.name]: e.target.value });
 
+  // on form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // console.log(values);
+    setIsSubmitting(true);
 
     fetch('/api/books', {
       method: 'POST',
@@ -30,10 +37,22 @@ const AddBook = () => {
       },
       body: JSON.stringify({ ...values, author: user.sub }),
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => res.json())
+      .then((data) => {
+        // if book published, then go to homepage
+        if (data.status === 201) {
+          setIsSubmitting(false);
+          navigate('/');
+        }
+      })
+      .catch((err) => {
+        // alert if any error happens
+        alert(err.message);
+        setIsSubmitting(false);
+      });
   };
 
+  // loading image while fetching user
   if (isLoading) {
     return (
       <Loading>
@@ -45,6 +64,7 @@ const AddBook = () => {
     );
   }
 
+  // if user not logged in
   if (!isAuthenticated) {
     return <p>Please login</p>;
   }
@@ -88,7 +108,9 @@ const AddBook = () => {
           onChange={handleChange}
           placeholder='ISBN'
         />
-        <SubmitButton type='submit'>Publish</SubmitButton>
+        <SubmitButton type='submit' disabled={isSubmitting}>
+          {isSubmitting ? 'Publishing...' : 'Publish'}
+        </SubmitButton>
       </Form>
     </Container>
   );
@@ -132,6 +154,11 @@ const SubmitButton = styled.button`
   cursor: pointer;
   font-size: 16px;
   border-radius: 4px;
+
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 const Loading = styled.div`

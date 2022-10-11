@@ -10,6 +10,7 @@ const SearchBar = () => {
     dispatch({ type: 'HANDLE_INPUT_CHANGE', payload: e.target.value });
   };
 
+  // after pressing search button navigate to books
   const handleSearchBook = () => {
     navigate(`/books`);
   };

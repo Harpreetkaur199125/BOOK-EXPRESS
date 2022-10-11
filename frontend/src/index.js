@@ -29,8 +29,8 @@ root.render(
           <Routes>
             <Route path='/' element={<App />}>
               <Route index element={<Home />} />
-              <Route path='book' element={<Book />} />
               <Route path='books' element={<Books />} />
+              <Route path='books/:id' element={<Book />} />
               <Route path='profile' element={<Profile />} />
               <Route path='add-book' element={<AddBook />} />
               <Route path='my-booklist' element={<MyBookList />} />

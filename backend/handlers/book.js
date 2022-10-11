@@ -33,7 +33,7 @@ const getBooks = async (req, res) => {
       console.log('here...');
       result = await db
         .collection('books')
-        .find({category: {$elemMatch: {category:cat}}})
+        .find({ category: { $elemMatch: { category: cat } } })
         .collation({ locale: 'en', strength: 2 })
         .toArray();
     } else if (search) {
@@ -88,8 +88,10 @@ const createBook = async (req, res) => {
 
     const result = await db.collection('books').insertOne(req.body);
 
-    res.status(200).json({
-      status: 200,
+    console.log(result);
+
+    res.status(201).json({
+      status: 201,
       book: result,
     });
   } catch (error) {

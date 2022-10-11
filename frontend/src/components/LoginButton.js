@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
+  // on clicking login button, redirect to login form that is coming from auth0
   return <Button onClick={() => loginWithRedirect()}>Log In</Button>;
 };
 

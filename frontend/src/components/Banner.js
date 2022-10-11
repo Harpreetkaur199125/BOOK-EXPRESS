@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+// Banner for project overview
 const Banner = () => {
   return (
     <BannerImage>
@@ -15,6 +16,7 @@ const Banner = () => {
     </BannerImage>
   );
 };
+
 export default Banner;
 
 const BannerImage = styled.div`
