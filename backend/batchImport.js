@@ -8,7 +8,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-// console.log(MONGO_URI);
+console.log(MONGO_URI);
 
 const { users, books } = require('./data');
 
@@ -19,9 +19,7 @@ const batchImport = async (req, res) => {
     const db = client.db('bookexpress');
     // console.log(users, books);
     const usersInserted = await db.collection('users').insertMany(users);
-
     const bookesInserted = await db.collection('books').insertMany(books);
-
     console.log(usersInserted, bookesInserted);
   } catch (err) {
     console.log(err.stack);

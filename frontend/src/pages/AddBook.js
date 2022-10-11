@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const AddBook = () => {
-  const { user } = useAuth0();
+  const { user, isLoading, isAuthenticated } = useAuth0();
   const [values, setValues] = useState({
     title: '',
     cover_image: '',
@@ -34,9 +34,24 @@ const AddBook = () => {
       .catch((err) => console.log(err));
   };
 
+  if (isLoading) {
+    return (
+      <Loading>
+        <img
+          src='https://thumbs.gfycat.com/BlandMildDungbeetle-size_restricted.gif'
+          alt=''
+        />
+      </Loading>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <p>Please login</p>;
+  }
+
   return (
     <Container>
-      <SectionTitle>Add a Book</SectionTitle>
+      <SectionTitle>Publish a Book</SectionTitle>
       <Form onSubmit={handleSubmit}>
         <Input
           type='text'
@@ -73,7 +88,7 @@ const AddBook = () => {
           onChange={handleChange}
           placeholder='ISBN'
         />
-        <SubmitButton type='submit'>Add Book</SubmitButton>
+        <SubmitButton type='submit'>Publish</SubmitButton>
       </Form>
     </Container>
   );
@@ -88,6 +103,7 @@ const Container = styled.div`
 
 const SectionTitle = styled.h2`
   margin: 0.5em 0;
+  margin-top: 2em;
 `;
 const Form = styled.form`
   max-width: 600px;
@@ -98,6 +114,14 @@ const Input = styled.input`
   margin: 1em 0;
   width: 100%;
   font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  outline: none;
+  transition: all 0.4s ease;
+
+  :focus {
+    border-color: #6143e1;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -107,4 +131,17 @@ const SubmitButton = styled.button`
   padding: 1em 2em;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 4px;
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+
+  img {
+    width: 50%;
+    max-width: 120px;
+  }
 `;

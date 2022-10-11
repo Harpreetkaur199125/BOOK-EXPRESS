@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <NaviagtionBar>
       <Container>
         <Logo to='/'>
-          <h1>bookexpress</h1>
+          <h1>
+            Book<span style={{ color: '#6143e1' }}>Express</span>
+          </h1>
         </Logo>
+
+        <SearchBar />
 
         <NavLinks>
           <li>
@@ -52,6 +57,10 @@ const NaviagtionBar = styled.nav`
   a {
     text-decoration: none;
   }
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 1000;
 `;
 
 const Container = styled.div`

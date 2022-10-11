@@ -83,6 +83,7 @@ const Card = styled.div`
     aspect-ratio: 3/4;
     margin-bottom: 1em;
     max-height: 200px;
+    border-radius: 4px;
   }
 `;
 
@@ -104,6 +105,7 @@ const SubscribeButton = styled.button`
   border: none;
   margin-top: 0.5em;
   cursor: pointer;
+  border-radius: 4px;
 
   :hover {
     background-color: blue;

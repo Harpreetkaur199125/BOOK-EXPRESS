@@ -11,6 +11,8 @@ import Wishlist from './pages/Wishlist';
 import AddBook from './pages/AddBook';
 import { Auth0Provider } from '@auth0/auth0-react';
 import Profile from './pages/Profile';
+import Books from './pages/Books';
+import { SearchContextProvider } from './context.js/SearchContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,18 +24,21 @@ root.render(
       audience='https://dev-8ari74v8.us.auth0.com/api/v2/'
       scope='read:current_user update:current_user_metadata'
     >
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<App />}>
-            <Route index element={<Home />} />
-            <Route path='book' element={<Book />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='add-book' element={<AddBook />} />
-            <Route path='my-booklist' element={<MyBookList />} />
-            <Route path='wishlist' element={<Wishlist />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <SearchContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<App />}>
+              <Route index element={<Home />} />
+              <Route path='book' element={<Book />} />
+              <Route path='books' element={<Books />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='add-book' element={<AddBook />} />
+              <Route path='my-booklist' element={<MyBookList />} />
+              <Route path='wishlist' element={<Wishlist />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </SearchContextProvider>
     </Auth0Provider>
   </React.StrictMode>
 );

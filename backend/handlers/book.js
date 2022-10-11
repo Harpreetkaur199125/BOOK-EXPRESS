@@ -11,18 +11,42 @@ const options = {
 // get all books
 const getBooks = async (req, res) => {
   const author = req.query.author;
+  const cat = req.query.category;
+  const search = req.query.search;
+
+  console.log('Cat: ', cat);
+  console.log('search: ', search);
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
     const db = client.db('bookexpress');
 
-    const result = author
-      ? await db
-          .collection('books')
-          .find({ author: author })
-          .collation({ locale: 'en', strength: 2 })
-          .toArray()
-      : await db.collection('books').find().toArray();
+    let result = [];
+
+    if (author) {
+      result = await db
+        .collection('books')
+        .find({ author: author })
+        .collation({ locale: 'en', strength: 2 })
+        .toArray();
+    } else if (cat) {
+      console.log('here...');
+      result = await db
+        .collection('books')
+        .find({category: {$elemMatch: {category:cat}}})
+        .collation({ locale: 'en', strength: 2 })
+        .toArray();
+    } else if (search) {
+      result = await db
+        .collection('books')
+        .find({ title: search })
+        .collation({ locale: 'en', strength: 2 })
+        .toArray();
+    } else {
+      result = await db.collection('books').find().toArray();
+    }
+
+    console.log(result);
 
     res.status(200).json({
       status: 200,

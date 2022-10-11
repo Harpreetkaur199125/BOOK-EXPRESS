@@ -22,7 +22,14 @@ const MyBookList = () => {
   }, [user]);
 
   if (isLoading) {
-    return <p>Loading....</p>;
+    return (
+      <Loading>
+        <img
+          src='https://thumbs.gfycat.com/BlandMildDungbeetle-size_restricted.gif'
+          alt=''
+        />
+      </Loading>
+    );
   }
 
   if (!isAuthenticated) {
@@ -35,7 +42,12 @@ const MyBookList = () => {
         <UserName>{user.name}</UserName>'s subscriptions
       </SectionTitle>
       {isBooksLoading ? (
-        'Loading books...'
+        <Loading>
+          <img
+            src='https://thumbs.gfycat.com/BlandMildDungbeetle-size_restricted.gif'
+            alt=''
+          />
+        </Loading>
       ) : (
         <BookList books={bookList} showStatus={false} />
       )}
@@ -48,7 +60,7 @@ export default MyBookList;
 const Container = styled.div`
   width: 90%;
   max-width: 1080px;
-  margin: 0 auto;
+  margin: 2em auto;
 `;
 
 const SectionTitle = styled.h2`
@@ -57,4 +69,16 @@ const SectionTitle = styled.h2`
 
 const UserName = styled.span`
   color: blue;
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+
+  img {
+    width: 50%;
+    max-width: 120px;
+  }
 `;

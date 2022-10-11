@@ -17,4 +17,5 @@ const Button = styled.button`
   font-size: 1em;
   margin-left: 1em;
   cursor: pointer;
+  border-radius: 4px;
 `;

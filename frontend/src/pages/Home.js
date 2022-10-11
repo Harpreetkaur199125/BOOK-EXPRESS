@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Banner from '../components/Banner';
 import BookList from '../components/BookList';
 
 const Home = () => {
@@ -17,12 +18,24 @@ const Home = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  if (isLoading) {
+    return (
+      <Loading>
+        <img
+          src='https://thumbs.gfycat.com/BlandMildDungbeetle-size_restricted.gif'
+          alt=''
+        />
+      </Loading>
+    );
+  }
+
   return (
     <div>
+      <Banner />
       <Container>
         <SectionHeader>
           <SectionTitle>Books</SectionTitle>
-          <AddBookLink to='add-book'>Add Book</AddBookLink>
+          <AddBookLink to='add-book'>Publish Book</AddBookLink>
         </SectionHeader>
         {isLoading ? (
           'Loading books...'
@@ -56,4 +69,17 @@ const AddBookLink = styled(Link)`
   color: #fff;
   padding: 0.5em 1em;
   text-decoration: none;
+  border-radius: 4px;
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+
+  img {
+    width: 50%;
+    max-width: 120px;
+  }
 `;
