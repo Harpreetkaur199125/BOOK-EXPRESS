@@ -24,7 +24,11 @@ const Home = () => {
           <SectionTitle>Books</SectionTitle>
           <AddBookLink to='add-book'>Add Book</AddBookLink>
         </SectionHeader>
-        {isLoading ? 'Loading books...' : <BookList books={books} />}
+        {isLoading ? (
+          'Loading books...'
+        ) : (
+          <BookList books={books} showStatus={true} />
+        )}
       </Container>
     </div>
   );

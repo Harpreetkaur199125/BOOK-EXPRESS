@@ -14,7 +14,7 @@ const getBooks = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
 
     const result = author
       ? await db
@@ -41,7 +41,7 @@ const getBook = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
     const result = await db.collection('books').findOne({ _id: bookId });
 
     res.status(200).json({
@@ -60,10 +60,9 @@ const createBook = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
 
-    console.log(req.body);
-    // const result = await db.collection('books').insertOne({  });
+    const result = await db.collection('books').insertOne(req.body);
 
     res.status(200).json({
       status: 200,
@@ -82,11 +81,11 @@ const updateBook = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
     // todo
     const result = await db
       .collection('books')
-      .findOneAndUpdate({ _id: bookId });
+      .findOneAndUpdate({ _id: bookId }, { $set: req.body });
 
     res.status(200).json({
       status: 200,
@@ -105,7 +104,7 @@ const deleteBook = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
     const result = await db
       .collection('books')
       .findOneAndDelete({ _id: bookId });
@@ -122,8 +121,56 @@ const deleteBook = async (req, res) => {
 };
 
 // wishlist a book
+const wishlistBook = async (req, res) => {
+  const bookId = req.params.id;
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+    await client.connect();
+    const db = client.db('bookexpress');
+
+    const result = await db
+      .collection('books')
+      .findOneAndUpdate(
+        { _id: bookId },
+        { $push: { wishListedBy: req.body.userId } }
+      );
+
+    res.status(200).json({
+      status: 200,
+      updatedBook: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 500, message: error.message });
+  }
+  client.close();
+};
 
 // subscribe a book
+const subscribeBook = async (req, res) => {
+  const bookId = req.params.id;
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+    await client.connect();
+    const db = client.db('bookexpress');
+
+    const result = await db
+      .collection('books')
+      .findOneAndUpdate(
+        { _id: bookId },
+        { $push: { subscribedBy: req.body.userId } }
+      );
+
+    res.status(200).json({
+      status: 200,
+      updatedBook: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 500, message: error.message });
+  }
+  client.close();
+};
 
 module.exports = {
   getBooks,
@@ -131,4 +178,6 @@ module.exports = {
   createBook,
   updateBook,
   deleteBook,
+  wishlistBook,
+  subscribeBook,
 };

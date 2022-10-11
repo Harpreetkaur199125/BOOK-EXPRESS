@@ -16,7 +16,7 @@ const batchImport = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
     // console.log(users, books);
     const usersInserted = await db.collection('users').insertMany(users);
 

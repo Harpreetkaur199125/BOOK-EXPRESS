@@ -4,15 +4,20 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const morgan = require('morgan');
-const { login, signup } = require('./handlers/auth');
 const {
   getBooks,
   getBook,
   createBook,
   updateBook,
   deleteBook,
+  wishlistBook,
+  subscribeBook,
 } = require('./handlers/book');
-const { getUser, updateUser, deleteUser } = require('./handlers/user');
+const {
+  getUser,
+  getUserWishList,
+  getUserSubscribedList,
+} = require('./handlers/user');
 
 dotenv.config();
 
@@ -28,15 +33,12 @@ express()
   .post('/api/books', createBook)
   .patch('/api/books', updateBook)
   .delete('/api/books', deleteBook)
+  .put('/api/books/wishlist/:id', wishlistBook)
+  .put('/api/books/subscribe/:id', subscribeBook)
 
-  // auth routes
-  .post('/api/login', login)
-  .post('/api/signup', signup)
-
-  // user routes
   .get('/api/users/:id', getUser)
-  .patch('/api/users/:id', updateUser)
-  .delete('/api/users/:id', deleteUser)
+  .get('/api/users/wishlist/:id', getUserWishList)
+  .get('/api/users/subscribed/:id', getUserSubscribedList)
 
   .get('*', (req, res) => {
     res.status(404).json({

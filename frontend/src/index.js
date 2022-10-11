@@ -4,28 +4,36 @@ import './index.css';
 import App from './App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Book from './pages/Book';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+
 import Home from './pages/Home';
 import MyBookList from './pages/MyBookList';
 import Wishlist from './pages/Wishlist';
 import AddBook from './pages/AddBook';
+import { Auth0Provider } from '@auth0/auth0-react';
+import Profile from './pages/Profile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route index element={<Home />} />
-          <Route path='book' element={<Book />} />
-          <Route path='add-book' element={<AddBook />} />
-          <Route path='my-booklist' element={<MyBookList />} />
-          <Route path='wishlist' element={<Wishlist />} />
-          <Route path='login' element={<Login />} />
-          <Route path='signup' element={<Signup />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Auth0Provider
+      domain='dev-8ari74v8.us.auth0.com'
+      clientId='s2kMTZJTPIxriKSBVhEgNSeJFd9chrrz'
+      redirectUri={window.location.origin}
+      audience='https://dev-8ari74v8.us.auth0.com/api/v2/'
+      scope='read:current_user update:current_user_metadata'
+    >
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<App />}>
+            <Route index element={<Home />} />
+            <Route path='book' element={<Book />} />
+            <Route path='profile' element={<Profile />} />
+            <Route path='add-book' element={<AddBook />} />
+            <Route path='my-booklist' element={<MyBookList />} />
+            <Route path='wishlist' element={<Wishlist />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Auth0Provider>
   </React.StrictMode>
 );

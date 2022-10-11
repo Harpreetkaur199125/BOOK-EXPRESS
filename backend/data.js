@@ -1,17 +1,15 @@
 const users = [
   {
     _id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-    firstname: 'Charles',
-    surname: 'Dickens',
+    name: 'Charles Dickens',
     email: 'charles@email.com',
-    password: '12345',
+    picture: '',
   },
   {
     _id: '1b9d6bcd-bbfc-4b2d-5f7r-ab8dfbhnekw2',
-    firstname: 'William',
-    surname: 'Shakespeare',
+    name: 'William Shakespeare',
     email: 'william@email.com',
-    password: '12345',
+    picture: '',
   },
 ];
 

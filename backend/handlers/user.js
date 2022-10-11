@@ -8,13 +8,12 @@ const options = {
   useUnifiedTopology: true,
 };
 
-// get a user
 const getUser = async (req, res) => {
   const userId = req.params.id;
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
+    const db = client.db('bookexpress');
     const result = await db.collection('users').findOne({ _id: userId });
 
     res.status(200).json({
@@ -28,20 +27,19 @@ const getUser = async (req, res) => {
   client.close();
 };
 
-// update a user
-const updateUser = async (req, res) => {
+const getUserWishList = async (req, res) => {
   const userId = req.params.id;
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
-    const result = await db
-      .collection('books')
-      .findOneAndUpdate({ _id: userId });
+    const db = client.db('bookexpress');
+    const result = await db.collection('books').find().toArray();
+
+    const books = result.filter((book) => book.wishListedBy.includes(userId));
 
     res.status(200).json({
       status: 200,
-      updatedBook: result,
+      wishlist: books,
     });
   } catch (error) {
     console.log(error);
@@ -50,20 +48,19 @@ const updateUser = async (req, res) => {
   client.close();
 };
 
-// delete a user
-const deleteUser = async (req, res) => {
+const getUserSubscribedList = async (req, res) => {
   const userId = req.params.id;
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db('bookwish');
-    const result = await db
-      .collection('books')
-      .findOneAndDelete({ _id: userId });
+    const db = client.db('bookexpress');
+    const result = await db.collection('books').find().toArray();
+
+    const books = result.filter((book) => book.subscribedBy.includes(userId));
 
     res.status(200).json({
       status: 200,
-      deletedBook: result,
+      subscribedList: books,
     });
   } catch (error) {
     console.log(error);
@@ -72,8 +69,4 @@ const deleteUser = async (req, res) => {
   client.close();
 };
 
-module.exports = {
-  getUser,
-  updateUser,
-  deleteUser,
-};
+module.exports = { getUser, getUserWishList, getUserSubscribedList };

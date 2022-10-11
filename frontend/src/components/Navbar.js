@@ -1,12 +1,17 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 
 const Navbar = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   return (
     <NaviagtionBar>
       <Container>
         <Logo to='/'>
-          <h1>Bookwish</h1>
+          <h1>bookexpress</h1>
         </Logo>
 
         <NavLinks>
@@ -16,12 +21,23 @@ const Navbar = () => {
           <li>
             <Link to='my-booklist'>My Reading List</Link>
           </li>
-          <li>
-            <LoginButton to='login'>Login</LoginButton>
-          </li>
-          <li>
-            <SignupButton to='signup'>Signup</SignupButton>
-          </li>
+          {isLoading ? (
+            <Loading
+              alt=''
+              src='https://miro.medium.com/max/1400/1*CsJ05WEGfunYMLGfsT2sXA.gif'
+            />
+          ) : isAuthenticated ? (
+            <>
+              <li>
+                <Link to='profile'>Profile</Link>
+              </li>
+              <li>
+                <LogoutButton />
+              </li>
+            </>
+          ) : (
+            <LoginButton />
+          )}
         </NavLinks>
       </Container>
     </NaviagtionBar>
@@ -64,9 +80,6 @@ const NavLinks = styled.ul`
   }
 `;
 
-const LoginButton = styled(Link)``;
-
-const SignupButton = styled(Link)`
-  background-color: #6143e1 !important;
-  color: #fff;
+const Loading = styled.img`
+  width: 96px;
 `;
