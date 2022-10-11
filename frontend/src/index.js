@@ -17,7 +17,6 @@ import { SearchContextProvider } from './context.js/SearchContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/*This is provide by the Auth0 profile which I create in auth0 website */}
     <Auth0Provider
       domain='dev-8ari74v8.us.auth0.com'
       clientId='s2kMTZJTPIxriKSBVhEgNSeJFd9chrrz'
@@ -25,7 +24,6 @@ root.render(
       audience='https://dev-8ari74v8.us.auth0.com/api/v2/'
       scope='read:current_user update:current_user_metadata'
     >
-      {/* This is search context provider to provide search query or will display when user will search for any book*/}
       <SearchContextProvider>
         <BrowserRouter>
           <Routes>
